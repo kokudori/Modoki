@@ -1,0 +1,32 @@
+﻿<Window x:Class="Modoki.Views.ConfigWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+	xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+	xmlns:l="http://schemas.livet-mvvm.net/2011/wpf"
+	xmlns:v="clr-namespace:Modoki.Views"
+	xmlns:vm="clr-namespace:Modoki.ViewModels"
+	Title="ConfigWindow" Height="350" Width="525" ResizeMode="NoResize">
+
+	<Window.DataContext>
+		<vm:ConfigViewModel/>
+	</Window.DataContext>
+
+	<i:Interaction.Triggers>
+		<i:EventTrigger EventName="ContentRendered">
+			<l:LivetCallMethodAction MethodTarget="{Binding}" MethodName="Initialize"/>
+		</i:EventTrigger>
+		<l:InteractionMessageTrigger MessageKey="Close" Messenger="{Binding Messenger}">
+			<l:WindowInteractionMessageAction/>
+		</l:InteractionMessageTrigger>
+		<i:EventTrigger EventName="Closed">
+			<l:DataContextDisposeAction/>
+		</i:EventTrigger>
+	</i:Interaction.Triggers>
+
+	<StackPanel>
+		<TextBlock Text="PINコードを入力してください" TextWrapping="Wrap" FontSize="24" HorizontalAlignment="Center" Margin="0,60,0,0"/>
+		<TextBox Text="{Binding PinCode, UpdateSourceTrigger=PropertyChanged}" Height="35" Width="140" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,40,0,0" FontSize="18"/>
+		<Button Command="{Binding InputCommand}" Content="入力" Height="40" Width="80" HorizontalAlignment="Center" Margin="0,30,0,0"/>
+	</StackPanel>
+</Window>
